@@ -23,6 +23,12 @@ public class UserController {
     public String getHomePage(Model model) {
         String test = this.userService.handleHello();
         model.addAttribute("helloString", test);
+        System.out.println("First user by email:");
+        System.out.println(this.userService.getFirstUserByEmail("nklinh@gmail.com"));
+
+        System.out.println("All users by email:");
+        System.out.println(this.userService.getAllUsersByEmail("nklinh@gmail.com"));
+
         return "hello";
     }
 
@@ -34,12 +40,13 @@ public class UserController {
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute("newUser") User newUser) {
-        System.out.println("new User: " + newUser);// newUser has id = 0 although in DB the id is an auto-incremented
-                                                   // positive value.
+        // System.out.println("new User: " + newUser);// newUser has id = 0 although in
+        // DB the id is an auto-incremented
+        // positive value.
         // when id=0 or id = null, it means a new user is saved to DB
         User savedUser = this.userService.handleSaveUser(newUser);
         // this savedUser has the id in DB
-        System.out.println(savedUser);
+        // System.out.println(savedUser);
         return "hello";
     }
 }
