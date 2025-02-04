@@ -19,7 +19,7 @@
             <body>
                 <div class="container mt-5 col-9 mx-auto">
                     <div class="row">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between mb-2">
                             <h2>Users Table</h2>
                             <a href="/admin/user/create" class="btn btn-primary">Create a user</a>
                         </div>
@@ -35,28 +35,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <!-- scope="row" -->
-                                    <th>1</th>
-                                    <td>nkl@gmail.com</td>
-                                    <td>NKL</td>
-                                    <td>
-                                        <button class="btn btn-success">View</button>
-                                        <button class="btn btn-warning mx-2">Update</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- scope="row" -->
-                                    <th>2</th>
-                                    <td>dqm@gmail.com</td>
-                                    <td>DQM</td>
-                                    <td>
-                                        <button class="btn btn-success">View</button>
-                                        <button class="btn btn-warning mx-2">Update</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                <c:forEach var="user" items="${users}">
+                                    <tr>
+                                        <!-- scope="row" -->
+                                        <th>${user.id}</th>
+                                        <td>${user.email}</td>
+                                        <td>${user.fullName}</td>
+                                        <td>
+                                            <a href="/admin/user/${user.id}" class="btn btn-success">View</button>
+                                                <a href="/admin/user/update/${user.id}"
+                                                    class="btn btn-warning mx-2">Update</button>
+                                                    <a href="/admin/user/delete/${user.id}"
+                                                        class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <!-- <tr>
+                                     scope="row" -->
+                                <!-- <th>2</th>
+                                <td>dqm@gmail.com</td>
+                                <td>DQM</td>
+                                <td>
+                                    <button class="btn btn-success">View</button>
+                                    <button class="btn btn-warning mx-2">Update</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                                </tr> -->
                             </tbody>
                         </table>
 
