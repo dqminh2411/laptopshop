@@ -10,13 +10,13 @@ public class LaptopshopApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext appCon = SpringApplication.run(LaptopshopApplication.class, args);
-		int cnt = 0;
-		System.out.println("List of Beans:");
-		for (String s : appCon.getBeanDefinitionNames()) {
-			System.out.println(s);
-			++cnt;
-		}
-		System.out.println(cnt);
+		// int cnt = 0;
+		// System.out.println("List of Beans:");
+		// for (String s : appCon.getBeanDefinitionNames()) {
+		// 	System.out.println(s);
+		// 	++cnt;
+		// }
+		// System.out.println(cnt);
 	}
 
 }

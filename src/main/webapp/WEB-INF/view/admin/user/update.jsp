@@ -22,33 +22,28 @@
                         <div class="col-md-6 col-12 mx-auto">
                             <h3>Update a user</h3>
                             <hr />
-                            <form:form method="post" action="/admin/user/update" modelAttribute="updatedUser"
-                                target="_self">
+                            <form:form method="post" action="/admin/user/update" modelAttribute="user" target="_self">
                                 <div class="mb-3">
                                     <label class="form-label">Id:</label>
-                                    <form:input type="text" class="form-control" path="id" value="${user.id}"
-                                        readonly="true" />
+                                    <form:input type="text" class="form-control" path="id" readonly="true" />
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control" path="email" value="${user.email}" />
+                                    <form:input type="email" class="form-control" path="email" disabled="true" />
                                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Phone number:</label>
-                                        <form:input type="text" class="form-control" path="phone"
-                                            value="${user.phone}" />
+                                        <form:input type="text" class="form-control" path="phone" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Full Name:</label>
-                                        <form:input type="text" class="form-control" path="fullName"
-                                            value="${user.fullName}" />
+                                        <form:input type="text" class="form-control" path="fullName" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Address:</label>
-                                        <form:input type="text" class="form-control" path="address"
-                                            value="${user.address}" />
+                                        <form:input type="text" class="form-control" path="address" />
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Update</button>

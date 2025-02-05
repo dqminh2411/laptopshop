@@ -19,17 +19,22 @@
 
             <body>
                 <div class="container mt-5">
-                    <h3>User detail</h3>
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-header">
-                            Id: ${user.id}
+                    <div class="row" style="border: 3px solid">
+                        <!-- <div class="col-12 mx-auto"> -->
+                        <h3>User detail</h3>
+                        <div class="card" style="width: 60%;">
+                            <div class="card-header">
+                                Id: ${user.id}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Email: ${user.email}</li>
+                                <li class="list-group-item">Fullname: ${user.fullName}</li>
+                                <li class="list-group-item">Address: ${user.address}</li>
+                                <li class="list-group-item">Phone: ${user.phone}</li>
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Email: ${user.email}</li>
-                            <li class="list-group-item">Fullname: ${user.fullName}</li>
-                            <li class="list-group-item">Address: ${user.address}</li>
-                            <li class="list-group-item">Phone: ${user.phone}</li>
-                        </ul>
+                        <a class="btn btn-primary mt-3" href="/admin/user">Back</a>
+                        <!-- </div> -->
                     </div>
 
                 </div>
