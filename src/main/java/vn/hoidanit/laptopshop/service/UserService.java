@@ -1,19 +1,27 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.ServletContext;
+import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.repository.RoleRepository;
 import vn.hoidanit.laptopshop.repository.UserRepository;
 
 @Service
 public class UserService {
     // DI
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final ServletContext servletContext;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, ServletContext servletContext) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.servletContext = servletContext;
     }
 
     public String handleHello() {
@@ -42,5 +50,19 @@ public class UserService {
 
     public void deleteUserById(long id) {
         this.userRepository.deleteById(id);
+    }
+
+    public Role getRoleByName(String name) {
+        return this.roleRepository.findByName(name);
+    }
+
+    public String getAvatarsDirPath() {
+        return this.servletContext.getRealPath("/resources/images/avatars");
+    }
+
+    public String getAvatarSrc(String avatarFileName) {
+        if (avatarFileName == "")
+            return "";
+        return "/images/avatars/" + avatarFileName;
     }
 }
