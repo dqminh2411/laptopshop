@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -32,19 +35,6 @@ public class UserController {
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        String test = this.userService.handleHello();
-        model.addAttribute("helloString", test);
-        System.out.println("First user by email:");
-        System.out.println(this.userService.getFirstUserByEmail("nklinh@gmail.com"));
-
-        System.out.println("All users by email:");
-        System.out.println(this.userService.getAllUsersByEmail("nklinh@gmail.com"));
-
-        return "hello";
     }
 
     @RequestMapping("/admin/user")
@@ -60,8 +50,17 @@ public class UserController {
     }
 
     @PostMapping(value = "/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User newUser,
+    public String createUserPage(Model model,
+            @ModelAttribute("newUser") @Valid User newUser,
+            BindingResult bindingResult,
             @RequestParam("avatarFile") MultipartFile avatarFile) {
+        // validate
+        if (bindingResult.hasErrors()) {
+            for (FieldError e : bindingResult.getFieldErrors()) {
+                System.out.println(e.getObjectName() + "-" + e.getField() + ":" + e.getDefaultMessage());
+            }
+            return "/admin/user/create";
+        }
 
         String avatarFileName = this.uploadService.handleSaveUploadFile(avatarFile, "avatars");
         String hashedPassword = this.passwordEncoder.encode(newUser.getPassword());

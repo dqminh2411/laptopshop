@@ -10,7 +10,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Delete User</title>
+                <title>Delete Product</title>
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -23,22 +23,22 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4 ">Manage Users</h1>
+                                <h1 class="mt-4">Manage Products</h1>
                                 <ol class="breadcrumb mb-4 ">
-                                    <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
+                                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Products</li>
                                 </ol>
                                 <div class="mt-5 ">
                                     <div class="row">
-                                        <h3>Delete user with id: ${id}</h3>
+                                        <h3>Delete product with id: ${product.id} - ${product.name}</h3>
 
                                         <hr />
                                         <div class="alert alert-warning">
-                                            Are you sure to delete this user?
+                                            Are you sure to delete this product?
                                         </div>
-                                        <form:form action="/admin/user/delete" method="post"
-                                            modelAttribute="deletedUser">
-                                            <form:input type="hidden" path="id" value="${id}" />
+                                        <form:form action="/admin/product/delete" method="post"
+                                            modelAttribute="deletedProduct">
+                                            <form:input type="hidden" path="id" value="${product.id}" />
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form:form>
                                     </div>

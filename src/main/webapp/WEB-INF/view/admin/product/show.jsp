@@ -22,18 +22,59 @@
                     <jsp:include page="../layout/sidebar.jsp" />
                     <div id="layoutSidenav_content">
                         <main>
-                            <h1 class="mt-4">Dashboard</h1>
-                            <ol class="breadcrumb mb-4">
-                                <li class="breadcrumb-item active">Dashboard</li>
-                            </ol>
-                            product
+                            <div class="container-fluid px-4">
+                                <h1 class="mt-4">Manage products</h1>
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Products</li>
+                                </ol>
+                                <div class="mt-5 col-12 mx-auto">
+                                    <div class="row">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h3>Products Table</h3>
+                                            <a href="/admin/product/create" class="btn btn-primary">Create a product</a>
+                                        </div>
+                                        <hr />
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price($)</th>
+                                                    <th>Factory</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="p" items="${products}">
+                                                    <tr>
+                                                        <td>${p.id}</td>
+                                                        <td>${p.name}</td>
+                                                        <td>${p.price}</td>
+                                                        <td>${p.factory}</td>
+                                                        <td>
+                                                            <a href="/admin/product/${p.id}"
+                                                                class="btn btn-success">View</a>
+                                                            <a href="/admin/product/update/${p.id}"
+                                                                class="btn btn-warning">Update</a>
+                                                            <a href="/admin/product/delete/${p.id}"
+                                                                class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                         </main>
                         <jsp:include page="../layout/footer.jsp" />
                     </div>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="js/scripts.js"></script>
+                <script src="/js/scripts.js"></script>
 
             </body>
 
