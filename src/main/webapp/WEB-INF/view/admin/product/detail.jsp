@@ -14,6 +14,18 @@
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const orgImage = "${product.image}";
+                        if (orgImage) {
+                            const imgURL = "/images/products/" + orgImage;
+                            $("#productImagePreview").attr("src", imgURL);
+                            $("#productImagePreview").css({ "display": "block" });
+
+                        }
+                    })
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -26,17 +38,24 @@
                                 <h1 class="mt-4">Manage Products</h1>
                                 <ol class="breadcrumb mb-4 ">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Products</li>
+                                    <li class="breadcrumb-item active"><a href="/admin/product">Products</a></li>
+                                    <li class="breadcrumb-item active">${product.id}</li>
                                 </ol>
                                 <div class="container mt-5">
                                     <div class="row">
                                         <div class="col-12 mx-auto">
                                             <h3>Product detail</h3>
                                             <div class="card" style="width: 60%;">
+
+                                                <img class="card-img-top" style="display:none"
+                                                    alt="product image preview" id="productImagePreview"
+                                                    src="${productImageSrc}" />
+
                                                 <div class="card-header">
-                                                    Id: ${product.id}
+                                                    Product information
                                                 </div>
                                                 <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">Id: ${product.id}</li>
                                                     <li class="list-group-item">Name: ${product.name}</li>
                                                     <li class="list-group-item">Price: $${product.price}</li>
                                                     <li class="list-group-item">Short description: ${product.shortDesc}
@@ -48,10 +67,7 @@
                                                     <li class="list-group-item">Target: ${product.target}</li>
                                                 </ul>
                                             </div>
-                                            <div class="col-12 mb-3">
-                                                <img style="max-height: 250px" alt="product image preview"
-                                                    id="productImagePreview" src="${productImageSrc}" />
-                                            </div>
+
                                             <a class="btn btn-primary mt-3" href="/admin/product">Back</a>
                                         </div>
                                     </div>

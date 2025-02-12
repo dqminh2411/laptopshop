@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import vn.hoidanit.laptopshop.service.UploadService;
+import vn.hoidanit.laptopshop.service.FileService;
 import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,12 +28,12 @@ import jakarta.validation.Valid;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final UploadService uploadService;
+    private final FileService fileService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, FileService fileService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        this.uploadService = uploadService;
+        this.fileService = fileService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -62,7 +62,7 @@ public class UserController {
             return "/admin/user/create";
         }
 
-        String avatarFileName = this.uploadService.handleSaveUploadFile(avatarFile, "avatars");
+        String avatarFileName = this.fileService.handleSaveUploadFile(avatarFile, "avatars");
         String hashedPassword = this.passwordEncoder.encode(newUser.getPassword());
 
         newUser.setAvatar(avatarFileName);

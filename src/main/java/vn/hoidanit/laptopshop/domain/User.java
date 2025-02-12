@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import vn.hoidanit.laptopshop.service.validator.StrongPassword;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +37,8 @@ public class User {
 
     @NotNull()
     @Size(min = 2, message = "Password must be at least 2 characters long")
+    // @StrongPassword(message = "Password cần chứa chữ cái thường, hoa, số và ký tự
+    // đặc biệt")
     private String password;
 
     @NotNull()
@@ -43,7 +46,7 @@ public class User {
     private String fullName;
 
     private String address;
-    @NotBlank(message = "Phone can't be blank")
+
     private String phone;
 
     private String avatar;

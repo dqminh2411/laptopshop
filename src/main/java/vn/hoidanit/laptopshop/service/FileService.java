@@ -10,16 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.ServletContext;
 
 @Service
-public class UploadService {
+public class FileService {
     private final ServletContext servletContext;
 
-    public UploadService(ServletContext servletContext) {
+    public FileService(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
 
     public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
         // getName() == "avatarFile" - variable name
-        if (file.getOriginalFilename() == "")
+        if (file.isEmpty())
             return "";
         String fileName = "";
         try {
@@ -51,4 +51,11 @@ public class UploadService {
         }
         return fileName;
     }
+
+    public void deleteImageFile(String imgName, String folderName) {
+        String folderPath = this.servletContext.getRealPath("/resources/images/") + folderName;
+        File targetImg = new File(folderPath + File.separator + imgName);
+        targetImg.delete();
+    }
+
 }

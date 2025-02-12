@@ -17,6 +17,14 @@
 
                 <script>
                     $(document).ready(() => {
+                        const orgImage = "${product.image}";
+                        if (orgImage) {
+                            const imgURL = "/images/products/" + orgImage;
+                            $("#productImagePreview").attr("src", imgURL);
+                            $("#productImagePreview").css({ "display": "block" });
+
+                        }
+
                         const productImage = $("#productImage");
                         productImage.change(function (e) {
                             const imgURL = URL.createObjectURL(e.target.files[0]);
@@ -38,7 +46,7 @@
                                 <h1 class="mt-4 ">Manage Products</h1>
                                 <ol class="breadcrumb mb-4 ">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Products</li>
+                                    <li class="breadcrumb-item active"><a href="/admin/product">Products</a></li>
                                 </ol>
                                 <div class="mt-5">
                                     <div class="row">
@@ -152,8 +160,9 @@
 
                                                 </div>
                                                 <div class="col-12 mb-3">
-                                                    <img style="max-height: 250px" alt="product image preview"
-                                                        id="productImagePreview" src="${productImageSrc}" />
+                                                    <img style="max-height: 250px;display: none;"
+                                                        alt="product image preview" id="productImagePreview"
+                                                        src="${productImageSrc}" />
                                                 </div>
                                                 <div>
                                                     <button type="submit" class="btn btn-primary">Update</button>

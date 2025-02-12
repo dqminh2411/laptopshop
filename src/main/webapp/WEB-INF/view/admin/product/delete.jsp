@@ -26,7 +26,7 @@
                                 <h1 class="mt-4">Manage Products</h1>
                                 <ol class="breadcrumb mb-4 ">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Products</li>
+                                    <li class="breadcrumb-item active"><a href="/admin/product">Products</a></li>
                                 </ol>
                                 <div class="mt-5 ">
                                     <div class="row">
@@ -37,8 +37,8 @@
                                             Are you sure to delete this product?
                                         </div>
                                         <form:form action="/admin/product/delete" method="post"
-                                            modelAttribute="deletedProduct">
-                                            <form:input type="hidden" path="id" value="${product.id}" />
+                                            modelAttribute="product">
+                                            <form:input type="hidden" path="id" />
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form:form>
                                     </div>
