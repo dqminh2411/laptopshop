@@ -54,7 +54,7 @@ public class HomePageController {
         user.setPassword(hashedPassword);
         user.setRole(this.userService.getRoleByName("USER"));
         this.userService.handleSaveUser(user);
-        return "client/auth/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")

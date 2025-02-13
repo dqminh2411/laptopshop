@@ -37,10 +37,6 @@ public class UserService {
         return this.userRepository.findAllByEmail(email);
     }
 
-    public User getFirstUserByEmail(String email) {
-        return this.userRepository.findFirstByEmail(email);
-    }
-
     public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
@@ -77,5 +73,9 @@ public class UserService {
 
     public boolean checkEmailExist(String email) {
         return this.userRepository.existsByEmail(email);
+    }
+
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }
