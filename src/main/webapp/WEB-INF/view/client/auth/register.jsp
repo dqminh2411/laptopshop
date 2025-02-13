@@ -36,16 +36,22 @@
                                                     <c:set var="emailError">
                                                         <form:errors path="email" cssClass="invalid-feedback" />
                                                     </c:set>
-                                                    <c:set var="strongPassError">
-                                                        <form:errors path="password" cssClass="invalid-feedback" />
+                                                    <c:set var="nameError">
+                                                        <form:errors path="firstName" cssClass="invalid-feedback" />
                                                     </c:set>
+                                                    <!-- <c:set var="strongPassError">
+                                                        <form:errors path="password" cssClass="invalid-feedback" />
+                                                    </c:set> -->
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <div class="form-floating mb-3 mb-md-0">
-                                                                <form:input class="form-control" id="inputFirstName"
-                                                                    type="text" placeholder="Enter your first name"
+                                                                <form:input
+                                                                    class="form-control ${not empty nameError? 'is-invalid':''}"
+                                                                    id="inputFirstName" type="text"
+                                                                    placeholder="Enter your first name"
                                                                     path="firstName" />
                                                                 <label for="inputFirstName">First name</label>
+                                                                ${nameError}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -74,7 +80,7 @@
                                                                     placeholder="Create a password" path="password" />
                                                                 <label for="inputPassword">Password</label>
                                                                 ${passwordError}
-                                                                ${strongPassError}
+                                                                <!-- ${strongPassError} -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -98,11 +104,12 @@
                                                     </div>
                                             </div>
                                             </form:form>
-                                        </div>
-                                        <div class="card-footer text-center py-3">
-                                            <div class="small"><a href="login.html">Have an account? Go to login</a>
+                                            <div class="card-footer text-center py-3">
+                                                <div class="small"><a href="/login">Have an account? Go to login</a>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

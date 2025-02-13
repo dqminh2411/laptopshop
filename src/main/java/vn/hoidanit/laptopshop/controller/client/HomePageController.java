@@ -56,4 +56,10 @@ public class HomePageController {
         this.userService.handleSaveUser(user);
         return "client/auth/login";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        model.addAttribute("user", new User());
+        return "client/auth/login";
+    }
 }
