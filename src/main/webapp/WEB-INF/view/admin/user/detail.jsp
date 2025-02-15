@@ -14,6 +14,18 @@
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const orgImage = "${user.avatar}";
+                        if (orgImage) {
+                            const imgURL = "/images/avatars/" + orgImage;
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+
+                        }
+                    })
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -44,9 +56,8 @@
                                                 </ul>
                                             </div>
                                             <div class="col-12 mb-3">
-                                                <label class="form-label">Avatar:</label>
-                                                <img style="max-height: 250px" alt="avatar preview" id="avatarPreview"
-                                                    src="${avatarUrl}" />
+                                                <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                                    id="avatarPreview" src="/images/avatars/${user.avatar}" />
                                             </div>
                                             <a class="btn btn-primary mt-3" href="/admin/user">Back</a>
                                         </div>

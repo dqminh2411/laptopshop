@@ -57,12 +57,6 @@ public class UserService {
         return this.servletContext.getRealPath("/resources/images/avatars");
     }
 
-    public String getAvatarSrc(String avatarFileName) {
-        if (avatarFileName == "")
-            return "";
-        return "/images/avatars/" + avatarFileName;
-    }
-
     public User mapRegisterDTOtoUser(RegisterDTO registerDTO) {
         User user = new User();
         user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());

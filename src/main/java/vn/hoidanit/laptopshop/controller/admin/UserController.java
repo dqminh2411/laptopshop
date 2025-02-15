@@ -82,14 +82,12 @@ public class UserController {
     public String getUserDetail(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
-        model.addAttribute("avatarUrl", this.userService.getAvatarSrc(user.getAvatar()));
         return "admin/user/detail";
     }
 
     @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
-        model.addAttribute("avatarUrl", this.userService.getAvatarSrc(user.getAvatar()));
         model.addAttribute("user", user);
         return "admin/user/update";
     }
