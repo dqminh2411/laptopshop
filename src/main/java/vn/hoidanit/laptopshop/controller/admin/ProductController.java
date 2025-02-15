@@ -47,7 +47,7 @@ public class ProductController {
                 System.out.println(e.getField() + ":" + e.getDefaultMessage());
             }
 
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         newProduct.setSold(0);
         newProduct.setImage(this.fileService.handleSaveUploadFile(productImage, "products"));

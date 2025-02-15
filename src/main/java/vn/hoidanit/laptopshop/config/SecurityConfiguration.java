@@ -10,7 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.DispatcherType;
 import vn.hoidanit.laptopshop.service.CustomUserDetailsService;
 import vn.hoidanit.laptopshop.service.UserService;
 
@@ -40,6 +42,25 @@ public class SecurityConfiguration {
         // authProvider.setHideUserNotFoundExceptions(false);
 
         return authProvider;
+    }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -> authorize
+                // By default, Spring 6 validates requests of DispatcherType.FORWARD and
+                // DispatcherType.INCLUDE:
+                // DispatcherType.FORWARD: forward to a view (login.jsp)
+                // DispatcherType.INCLUDE: include other services (getAllProducts in "/")
+                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
+                .requestMatchers("/", "/login", "/client/**", "/images/**", "/css/**", "/js/**").permitAll()
+                .anyRequest().authenticated())
+
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
+                        .permitAll());
+
+        return http.build();
     }
 
 }

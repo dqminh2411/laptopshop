@@ -59,7 +59,7 @@ public class UserController {
             for (FieldError e : bindingResult.getFieldErrors()) {
                 System.out.println(e.getObjectName() + "-" + e.getField() + ":" + e.getDefaultMessage());
             }
-            return "/admin/user/create";
+            return "admin/user/create";
         }
 
         String avatarFileName = this.fileService.handleSaveUploadFile(avatarFile, "avatars");
@@ -83,7 +83,7 @@ public class UserController {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("avatarUrl", this.userService.getAvatarSrc(user.getAvatar()));
-        return "/admin/user/detail";
+        return "admin/user/detail";
     }
 
     @GetMapping("/admin/user/update/{id}")
@@ -91,7 +91,7 @@ public class UserController {
         User user = this.userService.getUserById(id);
         model.addAttribute("avatarUrl", this.userService.getAvatarSrc(user.getAvatar()));
         model.addAttribute("user", user);
-        return "/admin/user/update";
+        return "admin/user/update";
     }
 
     @PostMapping(value = "/admin/user/update")
@@ -113,7 +113,7 @@ public class UserController {
     public String getDeleteUserPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
         model.addAttribute("deletedUser", new User());
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @PostMapping("/admin/user/delete")
