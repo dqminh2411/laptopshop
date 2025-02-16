@@ -62,4 +62,9 @@ public class HomePageController {
         model.addAttribute("user", new User());
         return "client/auth/login";
     }
+
+    @GetMapping("/access-denied")
+    public String getAccessDeniedPage() {
+        return "client/auth/access-denied";
+    }
 }
