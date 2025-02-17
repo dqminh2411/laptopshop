@@ -8,11 +8,13 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import jakarta.servlet.DispatcherType;
 import vn.hoidanit.laptopshop.service.CustomUserDetailsService;
@@ -47,12 +49,13 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new CustomSuccessHandler();
+    public AuthenticationSuccessHandler authenticationSuccessHandler(UserService userService) {
+        return new CustomSuccessHandler(userService);
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, AuthenticationSuccessHandler authenticationSuccessHandler)
+            throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 // By default, Spring 6 validates requests of DispatcherType.FORWARD and
                 // DispatcherType.INCLUDE:
@@ -63,15 +66,30 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN") // hasRole() remove "ROLE_" from GrantedAuthority
                 .anyRequest().authenticated())
+                .rememberMe(rememberMe -> rememberMe.rememberMeServices(rememberMeServices()))
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/logout?expired")
+                        .maximumSessions(1) // for one user
+                        .maxSessionsPreventsLogin(false))// make sure that only one session for a user. if true, 1 user
+                                                         // can have multiple sessions simultaneously
 
+                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/login?error")
-                        .successHandler(authenticationSuccessHandler())
+                        .successHandler(authenticationSuccessHandler)
                         .permitAll())
                 .exceptionHandling(exception -> exception.accessDeniedPage("/access-denied"));
 
         return http.build();
     }
 
+    @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
 }

@@ -46,11 +46,17 @@
                                                             type="password" placeholder="Password" />
                                                         <label for="password">Password</label>
                                                     </div>
-                                                    <div class="form-check mb-3">
+                                                    <!-- <div class="form-check mb-3">
                                                         <input class="form-check-input" id="inputRememberPassword"
                                                             type="checkbox" value="" />
                                                         <label class="form-check-label"
                                                             for="inputRememberPassword">Remember Password</label>
+                                                    </div> -->
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" id="rememberMe" type="checkbox"
+                                                            name="rememeber-me" />
+                                                        <label class="form-check-label" for="rememberMe">Remember
+                                                            me</label>
                                                     </div>
                                                     <div>
                                                         <input type="hidden" name="${_csrf.parameterName}"

@@ -33,10 +33,6 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public List<User> getAllUsersByEmail(String email) {
-        return this.userRepository.findAllByEmail(email);
-    }
-
     public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
