@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -73,6 +74,10 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         User user = this.userService.getUserByEmail(authentication.getName());
         session.setAttribute("fullName", user.getFullName());
         session.setAttribute("avatar", user.getAvatar());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("email", user.getEmail());
+        Cart cart = user.getCart();
+        session.setAttribute("cartSum", cart == null ? 0 : cart.getSum());
         clearAuthenticationAttributes(request);
     }
 
