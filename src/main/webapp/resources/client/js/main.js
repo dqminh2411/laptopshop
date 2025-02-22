@@ -157,20 +157,21 @@
             change = 1;
         }
         else {
+            var newVal = 1;
             if (oldVal > 1) {
-                var newVal = parseInt(oldVal) + 1;
+                newVal = parseInt(oldVal) - 1;
                 change = -1;
             }
-            newVal = 1;
+
         }
         quantityInput.val(newVal);
 
         const price = quantityInput.attr('data-cart-detail-price');
         const id = quantityInput.attr('data-cart-detail-id');
 
-        const inputElement = $(`p[data-cart-detail-id='${id}']`);
-        if (inputElement) {
-            inputElement.text(formatCurrency(+price * newVal) + " đ");
+        const sumElement = $(`p[data-cart-detail-id='${id}']`);
+        if (sumElement) {
+            sumElement.text(formatCurrency(+price * newVal) + " đ");
         }
 
         const totalPriceElements = $('p[data-cart-detail-total]');
@@ -183,6 +184,12 @@
                 $(totalPriceElements[index]).attr("data-cart-detail-total", total);
             })
         }
+
+        const idx = quantityInput.attr('data-cart-detail-index');
+        // console.log(idx);
+        const qtyFormInput = document.getElementById(`cartDetails${idx}.quantity`);
+        // console.log(qtyFormInput);
+        qtyFormInput.setAttribute("value", newVal);
 
     })
     function formatCurrency(value) {

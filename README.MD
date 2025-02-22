@@ -1,16 +1,18 @@
-# Java Spring Starter template
-Template này được sử dụng cho series Java Spring MVC (dự án laptopshop) của tác giả Hỏi Dân IT (Eric)
+# Laptopshop website 
+## Tech stacks
+- Java Spring: Spring Boot, Spring Security, Spring Data, Spring Session
+- HTML, CSS, Javascript, JSP 
+- MySQL
+- Git, Github
 
-## Về tác giả
-Mọi thông tin về Tác giả Hỏi Dân IT, các bạn có thể tìm kiếm tại đây:
+## Features:
+- Users as clients can:
+    - create, update accounts
+    - search for and view laptops
+    - add laptops to cart, place their orders
+- Users as admins can:
+    - create, update, delete accounts,products, orders
+    
 
-Website chính thức: https://hoidanit.vn/
 
-Youtube “Hỏi Dân IT” : https://www.youtube.com/@hoidanit
-
-Tiktok “Hỏi Dân IT” :  https://www.tiktok.com/@hoidanit
-
-Fanpage “Hỏi Dân IT” : https://www.facebook.com/askITwithERIC/
-
-Udemy Hỏi Dân IT: https://www.udemy.com/user/eric-7039/
 

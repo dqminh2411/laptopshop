@@ -9,6 +9,8 @@ import jakarta.servlet.ServletContext;
 import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.RegisterDTO;
+import vn.hoidanit.laptopshop.repository.OrderRepository;
+import vn.hoidanit.laptopshop.repository.ProductRepository;
 import vn.hoidanit.laptopshop.repository.RoleRepository;
 import vn.hoidanit.laptopshop.repository.UserRepository;
 
@@ -18,11 +20,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ServletContext servletContext;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, ServletContext servletContext) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, ServletContext servletContext,
+            OrderRepository orderRepository, ProductRepository productRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.servletContext = servletContext;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
     }
 
     public String handleHello() {
@@ -67,5 +74,17 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    public long countOrders() {
+        return this.orderRepository.count();
+    }
+
+    public long countProducts() {
+        return this.productRepository.count();
+    }
+
+    public long countUsers() {
+        return this.userRepository.count();
     }
 }

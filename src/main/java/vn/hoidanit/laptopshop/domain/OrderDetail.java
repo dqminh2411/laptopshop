@@ -15,7 +15,6 @@ public class OrderDetail {
     private long id;
 
     private long quantity;
-    private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -31,10 +30,6 @@ public class OrderDetail {
 
     public long getQuantity() {
         return quantity;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public Order getOrder() {
@@ -53,10 +48,6 @@ public class OrderDetail {
         this.quantity = quantity;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public void setOrder(Order order) {
         this.order = order;
     }
@@ -67,7 +58,7 @@ public class OrderDetail {
 
     @Override
     public String toString() {
-        return "OrderDetail [id=" + id + ", quantity=" + quantity + ", price=" + price + ", order=" + order
+        return "OrderDetail [id=" + id + ", quantity=" + quantity + ", order=" + order
                 + ", product=" + product + "]";
     }
 
