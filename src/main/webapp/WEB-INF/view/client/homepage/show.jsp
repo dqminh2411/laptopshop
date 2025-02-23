@@ -120,11 +120,15 @@
                                                                         <fmt:formatNumber type="number"
                                                                             value="${product.price}" /> đ
                                                                     </p>
-                                                                    <form action="/add-product-to-cart/${product.id}"
-                                                                        method="post">
+                                                                    <form action="/add-product-to-cart" method="post">
                                                                         <input type="hidden"
                                                                             name="${_csrf.parameterName}"
                                                                             value="${_csrf.token}" />
+                                                                        <input type="hidden" name="id"
+                                                                            value="${product.id}" />
+                                                                        <input type="hidden" name="quantity"
+                                                                            value="1" />
+                                                                        <input type="hidden" name="srcPage" value="/" />
                                                                         <button
                                                                             class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
                                                                                 class="fa fa-shopping-bag me-2 text-primary"></i>
