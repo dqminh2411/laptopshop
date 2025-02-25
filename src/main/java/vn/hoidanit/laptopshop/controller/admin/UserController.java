@@ -5,6 +5,9 @@ import vn.hoidanit.laptopshop.repository.UserRepository;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,9 +40,22 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/admin/user")
-    public String getUsersTablePage(Model model) {
-        model.addAttribute("users", this.userService.getAllUsers());
+    @GetMapping("/admin/user")
+    public String getUsersTablePage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int pageNo = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                pageNo = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+        }
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<User> page = this.userService.getAllUsers(pageable);
+
+        model.addAttribute("users", page.getContent());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
         return "admin/user/show";
     }
 

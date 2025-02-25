@@ -1,5 +1,10 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +33,23 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProductsPage(Model model) {
-        model.addAttribute("products", this.productService.getAllProducts());
+    public String getProductsPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int pageNo = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                pageNo = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+            // when value of page param is not integer .i.e page=abc
+        }
+
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);// 0-based
+        Page<Product> page = this.productService.getAllProducts(pageable);
+
+        model.addAttribute("products", page.getContent());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
         return "admin/product/show";
     }
 

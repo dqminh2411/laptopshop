@@ -3,6 +3,8 @@ package vn.hoidanit.laptopshop.service;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.ServletContext;
@@ -36,8 +38,8 @@ public class UserService {
         return "Hello service";
     }
 
-    public List<User> getAllUsers() {
-        return this.userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     public User getUserById(long id) {

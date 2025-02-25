@@ -1,7 +1,11 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +14,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.Order;
+import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.RegisterDTO;
 import vn.hoidanit.laptopshop.service.OrderService;
@@ -39,7 +45,9 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        model.addAttribute("products", this.productService.getAllProducts());
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> page = this.productService.getAllProducts(pageable);
+        model.addAttribute("products", page.getContent());
         return "client/homepage/show";
     }
 
@@ -88,5 +96,25 @@ public class HomePageController {
             model.addAttribute("orders", orders);
         }
         return "client/order/history";
+    }
+
+    @GetMapping("/products")
+    public String getProductsPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int pageNo = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                pageNo = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+        }
+        int pageSize = 6;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Product> page = this.productService.getAllProducts(pageable);
+
+        model.addAttribute("products", page.getContent());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+
+        return "client/product/show";
     }
 }
