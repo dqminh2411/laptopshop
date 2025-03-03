@@ -1,8 +1,14 @@
 package vn.hoidanit.laptopshop.controller.client;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,21 +22,21 @@ import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Order;
+import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.domain.Product_;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.service.CartService;
 import vn.hoidanit.laptopshop.service.ProductService;
-import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
 public class ItemController {
     private final ProductService productService;
     private final CartService cartService;
-    private final UserService userService;
 
-    public ItemController(ProductService productService, CartService cartService, UserService userService) {
+    public ItemController(ProductService productService, CartService cartService) {
         this.productService = productService;
         this.cartService = cartService;
-        this.userService = userService;
     }
 
     @GetMapping("/product/{id}")
@@ -116,6 +122,71 @@ public class ItemController {
     @GetMapping("/order-success")
     public String getOrderSuccessPage() {
         return "client/cart/order-success";
+    }
+
+    @GetMapping("/products")
+    public String getProductsPage(Model model, ProductCriteriaDTO productCriteriaDTO, HttpServletRequest request) {
+        int pageNo = 1;
+        try {
+            if (productCriteriaDTO.getPage() != null) {
+                pageNo = Integer.parseInt(productCriteriaDTO.getPage());
+            }
+        } catch (Exception e) {
+        }
+        int pageSize = 6;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        if (productCriteriaDTO.getSort() != null) {
+            String sort = productCriteriaDTO.getSort();
+            if (sort.equals("gia-tang-dan")) {
+                pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(Product_.PRICE).ascending());
+            } else if (sort.equals("gia-giam-dan")) {
+                pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(Product_.PRICE).descending());
+            }
+        }
+        // Double minPrice = minPriceOptional.isPresent() ? minPriceOptional.get() : 0;
+        // Double maxPrice = maxPriceOptional.isPresent() ? maxPriceOptional.get() :
+        // 1000000000;
+        // List<List<Double>> prices = new ArrayList<>();
+        // prices.add(new ArrayList<Double>(List.of(0d, 1000000000d)));
+        // if (priceOptional.isPresent()) {
+        // List<String> a = priceOptional.get();
+        // prices.clear();
+        // double UNIT = 1000000;
+        // for (String s : a) {
+        // String[] tk = s.split("-");
+        // prices.add(new ArrayList<Double>(
+        // List.of(Double.parseDouble(tk[0]) * UNIT, Double.parseDouble(tk[2]) *
+        // UNIT)));
+        // }
+        // }
+        // List<String> makes = makeOptional.isPresent() ? makeOptional.get() : new
+        // ArrayList<String>();
+        // Page<Product> page = this.productService.getAllProductsWithSpec(pageable,
+        // name);
+        Page<Product> page = this.productService.getAllProductsWithSpec(pageable,
+                productCriteriaDTO);
+
+        // Page<Product> page = this.productService.getAllProducts(pageable);
+        String qs = request.getQueryString();
+        if (qs != null || !qs.isEmpty()) {
+            qs.replace("page=" + pageNo, "");
+        }
+        model.addAttribute("products", page.getContent());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("queryString", qs);
+
+        return "client/product/show";
+    }
+
+    @GetMapping("/test")
+    public String test(@RequestParam("tval") List<String> tval) {
+        return "client/homepage/show";
+    }
+
+    @GetMapping("/test1")
+    public String test1() {
+        return "hello";
     }
 
 }

@@ -205,5 +205,76 @@
         return formatted;
     }
 
+    $('#btnFilter').click(function (event) {
+        event.preventDefault();
+        let makeArr = []
+        let priceArr = []
+        let targetArr = []
+
+        $('#factoryFilter .form-check-input:checked').each(function () {
+            makeArr.push($(this).val());
+        })
+
+        $('#priceFilter .form-check-input:checked').each(function () {
+            priceArr.push($(this).val());
+        })
+        $('#targetFilter .form-check-input:checked').each(function () {
+            targetArr.push($(this).val());
+        })
+
+        // console.log(makeArr, priceArr, targetArr);
+        // debugger
+        const sortVal = $('input[name="radio-sort"]:checked').val();
+
+        let curUrl = new URL(window.location.href)
+        const searchParams = curUrl.searchParams;
+        // add query string
+        searchParams.set('sort', sortVal);
+        searchParams.set('page', '1');
+
+        if (makeArr.length > 0) {
+            searchParams.set('make', makeArr.join(','))
+        }
+        else searchParams.delete('make');
+        if (priceArr.length > 0) {
+            searchParams.set('price', priceArr.join(','))
+        }
+        else searchParams.delete('price');
+        if (targetArr.length > 0) {
+            searchParams.set('target', targetArr.join(','))
+        } else searchParams.delete('target');
+
+        window.location.href = curUrl.toString();
+    })
+
+    const searchParams = new URLSearchParams(window.location.search)
+    // set checked boxes for makes
+    if (searchParams.has('make')) {
+        const makes = searchParams.get('make').split(',')
+        makes.forEach(make => {
+            $(`#factoryFilter .form-check-input[value="${make}"]`).prop('checked', true);
+        })
+    }
+    // set checked box for targets
+    if (searchParams.has('target')) {
+        const targets = searchParams.get('target').split(',')
+        targets.forEach(trg => {
+            $(`#targetFilter .form-check-input[value="${trg}"]`).prop('checked', true);
+        })
+    }
+    //set checked box for prices
+    if (searchParams.has('price')) {
+        const prices = searchParams.get('price').split(',')
+        prices.forEach(price => {
+            $(`#priceFilter .form-check-input[value="${price}"]`).prop('checked', true);
+        })
+    }
+    // set checked box for sort
+    if (searchParams.has('sort')) {
+        const sort = searchParams.get('sort')
+
+        $(`input[type="radio"][name="radio-sort"][value="${sort}"]`).prop('checked', true);
+
+    }
 })(jQuery);
 

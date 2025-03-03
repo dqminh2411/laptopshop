@@ -1,9 +1,11 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -11,9 +13,11 @@ import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.hoidanit.laptopshop.repository.CartDetailRepository;
 import vn.hoidanit.laptopshop.repository.CartRepository;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
+import vn.hoidanit.laptopshop.service.specification.ProductSpecs;
 
 @Service
 public class ProductService {
@@ -36,6 +40,20 @@ public class ProductService {
 
     public Page<Product> getAllProducts(Pageable pageable) {
         return this.productRepository.findAll(pageable);
+    }
+
+    // public Page<Product> getAllProductsWithSpec(Pageable pageable, String name) {
+    // return this.productRepository.findAll(ProductSpecs.nameLike(name), pageable);
+    // }
+    public Page<Product> getAllProductsWithSpec(Pageable pageable,
+            ProductCriteriaDTO productCriteriaDTO) {
+        // null makes, target, prices are handled in ProductSpec
+        Specification<Product> conjunctSpec = Specification.allOf(ProductSpecs.fromMakes(productCriteriaDTO.getMake()),
+                ProductSpecs.priceBetween(productCriteriaDTO.getPrice()),
+                ProductSpecs.withTargets((productCriteriaDTO.getTarget()))); // true by default =
+                                                                             // criteriaBuilder.conjunction()
+        return this.productRepository.findAll(conjunctSpec, pageable);
+
     }
 
     public Product getProductById(long id) {

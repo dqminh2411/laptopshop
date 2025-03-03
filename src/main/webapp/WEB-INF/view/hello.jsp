@@ -19,10 +19,14 @@
 
         <body>
             hello jsp
-            <h1>
-                ${helloString}
-            </h1>
-            <button>submit</button>
+            <form action="/test" method="get">
+                <div>
+                    <input value="nkl" name="tval" />
+                    <input value="cute" name="tval" />
+                </div>
+
+                <button type="submit">Send</button>
+            </form>
         </body>
 
         </html>

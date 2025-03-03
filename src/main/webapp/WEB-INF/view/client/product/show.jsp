@@ -51,7 +51,7 @@
                                 <div class="row g-4">
                                     <div class="col-md-4">
                                         <div class="row g-4">
-                                            <div class="col-12">
+                                            <div class="col-12" id="factoryFilter">
                                                 <div class="mb-2"><b>Hãng sản xuất</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-1"
@@ -88,7 +88,7 @@
 
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-12" id="targetFilter">
                                                 <div class="mb-2"><b>Mục đích sử dụng</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="target-1"
@@ -120,7 +120,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-12" id="priceFilter">
                                                 <div class="mb-2"><b>Mức giá</b></div>
 
                                                 <div class="form-check form-check-inline">
@@ -145,7 +145,7 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-5"
-                                                        value="tren-20-triệu">
+                                                        value="tren-20-trieu">
                                                     <label class="form-check-label" for="price-5">Trên 20 triệu</label>
                                                 </div>
                                             </div>
@@ -166,75 +166,87 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" id="sort-3"
-                                                        value="gia-nothing" name="radio-sort">
+                                                        value="gia-nothing" name="radio-sort" checked>
                                                     <label class="form-check-label" for="sort-3">Không sắp xếp</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <button
-                                                    class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
+                                                    class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4"
+                                                    id="btnFilter">
                                                     Lọc Sản Phẩm
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-8 text-center">
                                         <div class="row g-4 justify-content-start">
-                                            <c:forEach var="p" items="${products}">
-                                                <div class="col-md-6 col-lg-4">
+                                            <c:if test="${totalPages eq 0}">
+                                                <p>Không tìm thấy sản phẩm</p>
+                                            </c:if>
+                                            <c:if test="${totalPages > 0}">
+                                                <c:forEach var="p" items="${products}">
+                                                    <div class="col-md-6 col-lg-4">
 
-                                                    <div class="rounded position-relative fruite-item">
-                                                        <div class="fruite-img">
-                                                            <img src="/images/products/${p.image}"
-                                                                class="img-fluid w-100 rounded-top" alt="">
-                                                        </div>
-                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                            style="top: 10px; left: 10px;">Laptop</div>
-                                                        <div
-                                                            class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                            <h4 style="font-size:15px"><a
-                                                                    href="/product/${p.id}">${p.name}</a></h4>
-                                                            <p style="font-size:13px">${p.shortDesc}</p>
-                                                            <div class="d-flex justify-content-center flex-lg-wrap">
-                                                                <p style="font-size: 15px; text-align:center; width:100% "
-                                                                    class="text-dark fw-bold mb-3">
-                                                                    <fmt:formatNumber type="number"
-                                                                        value="${p.price}" /> đ
-                                                                </p>
-                                                                <form action="/add-product-to-cart" method="post">
-                                                                    <input type="hidden" name="${_csrf.parameterName}"
-                                                                        value="${_csrf.token}" />
-                                                                    <input type="hidden" name="id"
-                                                                        value="${product.id}" />
-                                                                    <input type="hidden" name="quantity" value="1" />
-                                                                    <input type="hidden" name="srcPage" value="/" />
-                                                                    <button
-                                                                        class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                            class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                        Add to cart</button>
-                                                                </form>
+                                                        <div class="rounded position-relative fruite-item">
+                                                            <div class="fruite-img">
+                                                                <img src="/images/products/${p.image}"
+                                                                    class="img-fluid w-100 rounded-top" alt="">
+                                                            </div>
+                                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                                style="top: 10px; left: 10px;">Laptop</div>
+                                                            <div
+                                                                class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                                <h4 style="font-size:15px"><a
+                                                                        href="/product/${p.id}">${p.name}</a></h4>
+                                                                <p style="font-size:13px">${p.shortDesc}</p>
+                                                                <div class="d-flex justify-content-center flex-lg-wrap">
+                                                                    <p style="font-size: 15px; text-align:center; width:100% "
+                                                                        class="text-dark fw-bold mb-3">
+                                                                        <fmt:formatNumber type="number"
+                                                                            value="${p.price}" /> đ
+                                                                    </p>
+                                                                    <form action="/add-product-to-cart" method="post">
+                                                                        <input type="hidden"
+                                                                            name="${_csrf.parameterName}"
+                                                                            value="${_csrf.token}" />
+                                                                        <input type="hidden" name="id"
+                                                                            value="${product.id}" />
+                                                                        <input type="hidden" name="quantity"
+                                                                            value="1" />
+                                                                        <input type="hidden" name="srcPage" value="/" />
+                                                                        <button
+                                                                            class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                                                class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                            Add to cart</button>
+                                                                    </form>
 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </c:forEach>
+                                                </c:forEach>
 
 
-                                            <div class="col-12">
-                                                <div class="pagination d-flex justify-content-center mt-5">
-                                                    <a href="/products?page=${currentPage-1}"
-                                                        class="rounded ${currentPage eq 1? 'disabled':''}">&laquo;</a>
-                                                    <c:forEach begin="1" end="${totalPages}" varStatus="loop">
-                                                        <a href="/products?page=${loop.index}"
-                                                            class="rounded ${currentPage eq loop.index? 'active':''}">${loop.index}</a>
-                                                    </c:forEach>
-                                                    <a href="/products?page=${currentPage+1}"
-                                                        class="rounded ${currentPage eq totalPages? 'disabled':''}">&raquo;</a>
+                                                <div class="col-12">
+                                                    <div class="pagination d-flex justify-content-center mt-5">
+                                                        <a href="/products?page=${currentPage-1}${queryString}"
+                                                            class="rounded ${currentPage eq 1? 'disabled':''}">&laquo;</a>
+                                                        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                                            <a href="/products?page=${loop.index}${queryString}"
+                                                                class="rounded ${currentPage eq loop.index? 'active':''}">${loop.index}</a>
+                                                        </c:forEach>
+                                                        <a href="/products?page=${currentPage+1}${queryString}"
+                                                            class="rounded ${currentPage eq totalPages? 'disabled':''}">&raquo;</a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </c:if>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
