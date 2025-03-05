@@ -168,7 +168,7 @@ public class ItemController {
 
         // Page<Product> page = this.productService.getAllProducts(pageable);
         String qs = request.getQueryString();
-        if (qs != null || !qs.isEmpty()) {
+        if (qs != null && !qs.isEmpty()) {
             qs.replace("page=" + pageNo, "");
         }
         model.addAttribute("products", page.getContent());
@@ -177,16 +177,6 @@ public class ItemController {
         model.addAttribute("queryString", qs);
 
         return "client/product/show";
-    }
-
-    @GetMapping("/test")
-    public String test(@RequestParam("tval") List<String> tval) {
-        return "client/homepage/show";
-    }
-
-    @GetMapping("/test1")
-    public String test1() {
-        return "hello";
     }
 
 }

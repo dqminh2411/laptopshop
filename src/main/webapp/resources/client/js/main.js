@@ -276,5 +276,71 @@
         $(`input[type="radio"][name="radio-sort"][value="${sort}"]`).prop('checked', true);
 
     }
+
+    $('.addToCartBtn').click(function (event) {
+        event.preventDefault();
+        const productId = $(this).attr('data-product-id');
+        addProductToCart(productId, 1);
+    })
+
+    $('.addToCartBtnDetail').click(function (event) {
+        event.preventDefault();
+        const productId = $(this).attr('data-product-id');
+        const quantity = $('#cartDetails0\\.quantity').val();
+        addProductToCart(productId, quantity);
+    })
+
+    function addProductToCart(productId, quantity) {
+        if (!isLogin()) {
+            $.toast({
+                heading: "Lỗi thao tác",
+                text: "Bạn cần đăng nhập tài khoản",
+                position: "top-right",
+                icon: "error"
+            })
+            return;
+        }
+        const token = $('meta[name="_csrf"]').attr('content');
+        const header = $('meta[name="_csrf_header"]').attr('content');
+        $.ajax({
+            url: `${window.location.origin}/api/add-product-to-cart`,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            type: 'POST',
+            data: JSON.stringify({ productId: productId, quantity: quantity }),
+            contentType: 'application/json',
+            success: function (response) {
+                const sum = +response;
+                // console.log(response)
+                // console.log(sum)
+                // console.log("\\.")
+                $('#cartSum').text(response);
+                $.toast({
+                    heading: 'Giỏ hàng',
+                    text: 'Thêm sản phẩm vào giỏ hàng thành công',
+                    position: 'top-right',
+                    icon: 'success',
+                })
+
+            },
+            error: function (response) {
+                $.toast({
+                    heading: 'Giỏ hàng',
+                    text: 'Có lỗi xảy ra',
+                    position: 'top-right',
+                    icon: 'error',
+                })
+                console.log(response)
+            }
+        })
+    }
+
+    function isLogin() {
+        const loginEle = $('.a-login');
+        if (loginEle.length > 0)
+            return false;
+        return true;
+    }
 })(jQuery);
 

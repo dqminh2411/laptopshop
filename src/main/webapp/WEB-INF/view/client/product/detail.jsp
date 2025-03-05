@@ -31,6 +31,12 @@
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
 
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header name is X-CSRF-TOKEN -->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+                <!-- notification -->
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
+                    rel="stylesheet">
 
             </head>
 
@@ -125,16 +131,17 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <form action="/add-product-to-cart" method="post">
+                                        <!-- <form action="/add-product-to-cart" method="post">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <input type="hidden" name="id" value="${product.id}" />
                                             <input type="hidden" name="quantity" id="cartDetails0.quantity" />
-                                            <input type="hidden" name="srcPage" value="/product/${product.id}" />
-                                            <button
-                                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-                                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                cart</button>
-                                        </form>
+                                            <input type="hidden" name="srcPage" value="/product/${product.id}" /> -->
+                                        <input type="hidden" name="quantity" id="cartDetails0.quantity" value="1" />
+                                        <button data-product-id="${product.id}"
+                                            class="addToCartBtnDetail  border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to
+                                            cart</button>
+                                        <!-- </form> -->
 
                                     </div>
 
@@ -234,6 +241,9 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+
             </body>
 
             </html>

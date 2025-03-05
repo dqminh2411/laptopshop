@@ -15,6 +15,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>laptopshop</name>
 	<description>Demo project for Spring Boot</description>
+	<!-- jar doesn't support jsp -->
+	<packaging>war</packaging>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -81,6 +83,11 @@
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>6.4.1.Final</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>4.0.4</version>
 		</dependency>
 
 	</dependencies>

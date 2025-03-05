@@ -59,7 +59,8 @@ public class SecurityConfiguration {
                 // DispatcherType.FORWARD: forward to a view (login.jsp)
                 // DispatcherType.INCLUDE: include other services (getAllProducts in "/")
                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                .requestMatchers("/", "/login", "/client/**", "/product/**", "/images/**", "/css/**", "/js/**",
+                .requestMatchers("/", "/login", "/client/**", "/product/**", "/products/**", "/images/**", "/css/**",
+                        "/js/**",
                         "/register")
                 .permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN") // hasRole() remove "ROLE_" from GrantedAuthority
