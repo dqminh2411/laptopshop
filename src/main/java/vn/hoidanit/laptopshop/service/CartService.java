@@ -3,6 +3,7 @@ package vn.hoidanit.laptopshop.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Order;
 import vn.hoidanit.laptopshop.domain.OrderDetail;
+import vn.hoidanit.laptopshop.domain.PaymentMethod;
+import vn.hoidanit.laptopshop.domain.PaymentStatus;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.CartDetailRepository;
 import vn.hoidanit.laptopshop.repository.CartRepository;
@@ -73,6 +76,9 @@ public class CartService {
         order.setUser(user);
         order.setOrderTime(LocalDateTime.now());
         order.setStatus("PENDING");
+        order.setPaymentStatus(PaymentStatus.PAYMENT_UNPAID);
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        order.setPaymentRef(order.getPaymentMethod().equals(PaymentMethod.BANKING) ? uuid : "UNKNOWN");
         // no need to set List<OrderDetail> for Order
 
         // set OrderDetails
